@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}My Tasks{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><p class="eyebrow eyebrow-dark">YOUR WORKSPACE</p><h1>My tasks<span class="heading-period">.</span></h1><p class="hero-description dark-description">Keep track of what's pending, celebrate what's finished, and take the next step.</p></div>
+  <a class="button button-primary" href="{{ url_for('home') }}#add-task">+ New task</a>
+</section>
+
+<div class="list-summary"><span><strong>{{ tasks|length }}</strong> {% if tasks|length == 1 %}task{% else %}tasks{% endif %} in your list</span><span class="summary-legend"><i class="legend-dot legend-pending"></i> Pending <i class="legend-dot legend-done"></i> Completed</span></div>
+
+{% if tasks %}
+  <section class="task-list" aria-label="All tasks">
+    {% for task in tasks %}
+      <article class="task-row {% if task.completed %}task-row-completed{% endif %}">
+        <div class="task-status-symbol {% if task.completed %}status-done{% else %}status-pending{% endif %}" aria-hidden="true">{% if task.completed %}✓{% else %}{{ loop.index }}{% endif %}</div>
+        <div class="task-details">
+          <h2 class="task-title {% if task.completed %}completed-title{% endif %}">{{ task.title }}</h2>
+          <div class="task-metadata"><span class="metadata-item"><span aria-hidden="true">▦</span> Due {{ task.deadline.strftime('%d %b %Y') }}</span><span class="priority priority-{{ task.priority|lower }}">{{ task.priority }} priority</span>{% if not task.completed and task.deadline < today %}<span class="overdue-tag">Overdue</span>{% endif %}</div>
+        </div>
+        <div class="task-actions">
+          <form action="{{ url_for('toggle_task_complete', task_id=task.id) }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="button button-small {% if task.completed %}button-quiet{% else %}button-complete{% endif %}" type="submit">{% if task.completed %}Mark pending{% else %}✓ Complete{% endif %}</button>
+          </form>
+          <form action="{{ url_for('delete_task', task_id=task.id) }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="button-icon-delete" type="submit" aria-label="Delete {{ task.title }}" title="Delete task">×</button>
+          </form>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+{% else %}
+  <section class="panel empty-state empty-state-large"><div class="empty-illustration" aria-hidden="true">✧</div><p class="eyebrow eyebrow-dark">FRESH START</p><h2>Your list is clear.</h2><p>Add a task when you are ready to plan your next step.</p><a class="button button-primary" href="{{ url_for('home') }}#add-task">Create your first task</a></section>
+{% endif %}
+
+<div class="bottom-callout"><span class="callout-icon" aria-hidden="true">✦</span><p><strong>Progress is progress, however small.</strong><br>Mark a task complete when you finish it. You’ve got this.</p></div>
+{% endblock %}

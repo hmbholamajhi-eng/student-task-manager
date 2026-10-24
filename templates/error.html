@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block content %}
+<section class="panel error-page"><div class="error-code">{{ error_code }}</div><p class="eyebrow eyebrow-dark">SOMETHING DIDN'T GO AS PLANNED</p><h1>{{ page_title }}</h1><p>{{ message }}</p><a class="button button-primary" href="{{ url_for('home') }}">Back to dashboard</a></section>
+{% endblock %}

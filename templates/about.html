@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block content %}
+<section class="about-hero">
+  <p class="eyebrow"><span class="eyebrow-dot"></span> A SMALL TOOL FOR BIG GOALS</p>
+  <h1>Meet StudyFlow<span class="heading-period">.</span></h1>
+  <p>StudyFlow is a lightweight task manager made for students who want a clear view of their deadlines without another complicated productivity system.</p>
+</section>
+<section class="about-grid">
+  <article class="panel about-card"><span class="about-number">01</span><h2>Plan with clarity</h2><p>Add a task with a deadline and a priority, then see what needs your attention first.</p></article>
+  <article class="panel about-card"><span class="about-number">02</span><h2>Make progress visible</h2><p>Mark tasks complete, move them back to pending when needed, or remove tasks you no longer need.</p></article>
+  <article class="panel about-card"><span class="about-number">03</span><h2>Keep it simple</h2><p>This learning project uses a Python list instead of a database. Tasks are cleared when the Flask server stops.</p></article>
+</section>
+<section class="panel routes-panel">
+  <p class="eyebrow eyebrow-dark">UNDER THE HOOD</p><h2>How the Flask routes work</h2>
+  <div class="route-table-wrap"><table class="route-table"><thead><tr><th>Route</th><th>Method</th><th>Purpose</th></tr></thead><tbody>
+    <tr><td><code>/</code></td><td><span class="method method-get">GET</span></td><td>Dashboard and task summary</td></tr>
+    <tr><td><code>/tasks</code></td><td><span class="method method-get">GET</span> <span class="method method-post">POST</span></td><td>View tasks and create a new task</td></tr>
+    <tr><td><code>/tasks/&lt;id&gt;/complete</code></td><td><span class="method method-post">POST</span></td><td>Toggle completion status</td></tr>
+    <tr><td><code>/tasks/&lt;id&gt;/delete</code></td><td><span class="method method-post">POST</span></td><td>Delete a task</td></tr>
+    <tr><td><code>/about</code></td><td><span class="method method-get">GET</span></td><td>Project and route explanation</td></tr>
+  </tbody></table></div>
+</section>
+<section class="learning-note"><span class="note-mark" aria-hidden="true">✦</span><div><h2>Built to be understood.</h2><p>The project demonstrates Flask routing, HTML templates, GET and POST requests, server-side validation, flash messages, and in-memory data management.</p></div></section>
+{% endblock %}
